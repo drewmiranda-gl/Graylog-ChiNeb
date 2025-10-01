@@ -2,15 +2,24 @@ import requests
 import json
 import time
 import sys
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # --- Configuration ---
 # Replace with your Graylog cloud account domain (without http:// or https://)
-GRAYLOG_DOMAIN = "yourdomain.graylog.cloud" 
+# GRAYLOG_DOMAIN = "yourdomain.graylog.cloud"
+GRAYLOG_BASE_URI = config.get('graylog', 'base_uri')
+
 # Replace with the specific Adapter ID you are targeting
-ADAPTER_ID = "Adapter_ID"
+# ADAPTER_ID = "Adapter_ID"
+ADAPTER_ID = config.get('graylog', 'data_adapter_oid')
+
 # IMPORTANT: Replace with your actual Graylog API token.
 # Keep this token secure and do not expose it publicly.
-API_TOKEN = "Your_API_Token"
+# API_TOKEN = "Your_API_Token"
+API_TOKEN = config.get('graylog', 'api_token')
 
 
 def upload_data_to_graylog(data_payload):
@@ -27,7 +36,7 @@ def upload_data_to_graylog(data_payload):
 
     # Construct the full API endpoint URL
     # Use http:// because your domain includes port 9000, which is typically for non-HTTPS traffic.
-    url = f"http://{GRAYLOG_DOMAIN}/api/plugins/org.graylog.plugins.lookup/lookup/adapters/mongodb/{ADAPTER_ID}"
+    url = f"{GRAYLOG_BASE_URI}/api/plugins/org.graylog.plugins.lookup/lookup/adapters/mongodb/{ADAPTER_ID}"
 
     # Set the necessary headers for the request
     headers = {
