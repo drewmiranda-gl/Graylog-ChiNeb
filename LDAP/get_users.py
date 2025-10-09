@@ -23,8 +23,8 @@ def query_active_directory():
     BIND_USER = f"{AD_USER}@{domain_name}"
     
     # Uncomment for Secure LDAP connection. Make sure to get Certificate for your AD and either rename it to ca_cert.cer or change the file name in the config.ini
-    tls_config = Tls(validate=ssl.CERT_REQUIRED, ca_certs_file=CA_CERT_FILE)
-    server = Server(AD_SERVER, get_info=ALL, use_ssl=True, tls=tls_config)
+    # tls_config = Tls(validate=ssl.CERT_REQUIRED, ca_certs_file=CA_CERT_FILE)
+    # server = Server(AD_SERVER, get_info=ALL, use_ssl=True, tls=tls_config)
     
     # Uncomment if you want to use a not secure connection to your LDAP. If using a this method, create a blank file called ca_cert.cer
     # server = Server(AD_SERVER, get_info=ALL, use_ssl=False)
