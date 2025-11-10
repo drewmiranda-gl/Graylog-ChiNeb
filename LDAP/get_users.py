@@ -115,8 +115,11 @@ if __name__ == "__main__":
         print(f"Saving user data as JSON inside of CSV file '{output_json_in_csv_filename}'")
         import csv
         with open(output_json_in_csv_filename, 'w') as csvfile:
-            csvwriter = csv.writer(csvfile, delimiter='#',
-                                    quotechar='\'', quoting=csv.QUOTE_MINIMAL)
+            csvwriter = csv.writer(csvfile
+                                    , delimiter='#'
+                                    , quotechar='\''
+                                    , quoting=csv.QUOTE_MINIMAL
+                                    )
             csvwriter.writerow([csv_key_column, 'json_ad_user'])
 
             i = 0
@@ -128,7 +131,26 @@ if __name__ == "__main__":
                     break
                 
                 if csv_key_column in userobj:
-                    csvwriter.writerow([userobj[csv_key_column], json.dumps(userobj)])
+                    if userobj["sAMAccountName"] == "graylog":
+                        if "memberOf" in userobj and userobj["memberOf"]:
+                            l_member_of = []
+                            if isinstance(userobj["memberOf"], list):
+                                # l_member_of = userobj["memberOf"]
+                                for listitem in userobj["memberOf"]:
+                                    l_member_of.append(listitem.replace("\\", ""))
+                            else:
+                                l_member_of.append(userobj["memberOf"].replace("\\", ""))
+                            
+                            if len(l_member_of) == 1:
+                                userobj["memberOf"] = l_member_of[0]
+                            elif len(l_member_of) == 0:
+                                userobj["memberOf"] = ""
+                            else:
+                                userobj["memberOf"] = l_member_of
+                        
+                    json_vals = json.dumps(userobj)
+
+                    csvwriter.writerow([userobj[csv_key_column], json_vals])
 
         if i > 0:
             print(f"✅ Successfully exported {i} user accounts as JSON inside of CSV file '{output_json_in_csv_filename}'")
