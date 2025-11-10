@@ -136,8 +136,8 @@ if __name__ == "__main__":
                 "CSV Config: "
                 , "\n", "    ", "Separator: #"
                 , "\n", "    ", "Quote character: '"
-                , "\n", "    ", "Key column: json_ad_user"
-                , "\n", "    ", "Value column: seconds"
+                , "\n", "    ", "Key column: sAMAccountName"
+                , "\n", "    ", "Value column: json_ad_user"
             ]))
         else:
             print(f"Failed to export any users to '{output_json_in_csv_filename}'")
