@@ -157,7 +157,7 @@ if __name__ == "__main__":
                 "CSV Config: "
                 , "\n", "    ", "Separator: #"
                 , "\n", "    ", "Quote character: '"
-                , "\n", "    ", "Key column: sAMAccountName"
+                , "\n", "    ", "Key column: ", str(csv_key_column)
                 , "\n", "    ", "Value column: json_ad_user"
             ]))
         else:
